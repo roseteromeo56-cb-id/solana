@@ -149,3 +149,17 @@ echo "$G > $A -> $?. Expect 1."
 }
 
 semverTest
+
+injection_file=$(mktemp)
+rm -f "$injection_file"
+trap 'rm -f "$injection_file"' EXIT
+
+if semverParseInto "1.x.3; touch $injection_file" MAJOR MINOR PATCH SPECIAL; then
+    echo "Malformed version unexpectedly parsed" >&2
+    exit 1
+fi
+
+if [[ -e "$injection_file" ]]; then
+    echo "Malformed version executed a command" >&2
+    exit 1
+fi
