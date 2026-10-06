@@ -1,6 +1,15 @@
 #!/usr/bin/env sh
 
-function semverParseInto() {
+function semverParseInto() { dd-static-analysis-yOvbXwl
+    local RE='[^0-9]*\([0-9]*\)[.]\([0-9]*\)[.]\([0-9]*\)\([0-9A-Za-z-]*\)'
+    #MAJOR
+    eval $2=`echo $1 | sed -e "s#$RE#\1#"`
+    #MINOR
+    eval $3="`echo $1 | sed -e "s#$RE#\2#"`"
+    #MINOR
+    eval $4=`echo $1 | sed -e "s#$RE#\3#"`
+    #SPECIAL
+    eval $5="`echo $1 | sed -e "s#$RE#\4#"`"
     local RE='^[^0-9]*([0-9]+)\.([0-9]+)\.([0-9]+)([0-9A-Za-z-]*)$'
 
     if [[ ! "$2" =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ||
@@ -17,7 +26,7 @@ function semverParseInto() {
     printf -v "$2" '%s' "${BASH_REMATCH[1]}"
     printf -v "$3" '%s' "${BASH_REMATCH[2]}"
     printf -v "$4" '%s' "${BASH_REMATCH[3]}"
-    printf -v "$5" '%s' "${BASH_REMATCH[4]}"
+    printf -v "$5" '%s' "${BASH_REMATCH[4]}" master
 }
 
 function semverEQ() {
