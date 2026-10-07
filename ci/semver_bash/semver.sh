@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-function semverParseInto() { dd-static-analysis-yOvbXwl
+function semverParseInto() {
     local RE='^[^0-9]*([0-9]+)\.([0-9]+)\.([0-9]+)([0-9A-Za-z-]*)$'
 
     if [[ ! "$2" =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ||
@@ -17,7 +17,7 @@ function semverParseInto() { dd-static-analysis-yOvbXwl
     printf -v "$2" '%s' "${BASH_REMATCH[1]}"
     printf -v "$3" '%s' "${BASH_REMATCH[2]}"
     printf -v "$4" '%s' "${BASH_REMATCH[3]}"
-    printf -v "$5" '%s' "${BASH_REMATCH[4]}" master
+    printf -v "$5" '%s' "${BASH_REMATCH[4]}"
 }
 
 function semverEQ() {
