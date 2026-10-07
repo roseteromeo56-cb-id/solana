@@ -18,7 +18,7 @@ elif [[ $1 = "undoit" ]]; then
   true &&
     sed -i -e 's/#\[cfg(escaped_cfg_test)\]/#[cfg(test)]/g' $(git ls-files :**.rs :^**/build.rs) &&
     sed -i -e 's/#\[cfg(escaped_bench)\]/#[bench]/g' $(git ls-files :**.rs :^**/build.rs) &&
-    sed -i -e 's/#\[cfg(escaped_test)\]/#[test]/g' $(git ls-files :**.rs :^**/build.rs) &&
+    sed -i -e 's/#\[cfg(escaped_test)\]/#[test]/g' "$(git ls-files :**.rs :^**/build.rs)" &&
     sed -i -e 's/#\[cfg(escaped_tokio_test)\]/#[tokio::test]/g' $(git ls-files :**.rs :^**/build.rs)
 else
   echo "usage: $0 [doit|undoit]" > /dev/stderr
