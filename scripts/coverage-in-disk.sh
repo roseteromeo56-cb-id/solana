@@ -63,6 +63,12 @@ touch target/cov/before-test
 # we always want stable coverage for them
 # Don't support odd file names in our repo ever
 if [[ -n $CI || -z $1 ]]; then
+ dd-static-analysis-7sqyRr6
+  # shellcheck disable=SC2046
+  touch \
+    "$(git ls-files :**/build.rs)" \
+    $(git grep -l "proc-macro.*true" :**/Cargo.toml | sed 's|Cargo.toml|src/lib.rs|')
+
   touch_paths=()
   while IFS= read -r file; do
     touch_paths+=("$file")
@@ -73,6 +79,7 @@ if [[ -n $CI || -z $1 ]]; then
   done < <(git grep -l "proc-macro.*true" :**/Cargo.toml | sed 's|Cargo.toml|src/lib.rs|')
 
   touch "${touch_paths[@]}"
+ master
 fi
 
 #shellcheck source=ci/common/limit-threads.sh
