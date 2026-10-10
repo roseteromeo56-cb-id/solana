@@ -66,7 +66,7 @@ if [[ -n $CI || -z $1 ]]; then
   # shellcheck disable=SC2046
   touch \
     $(git ls-files :**/build.rs) \
-    $(git grep -l "proc-macro.*true" :**/Cargo.toml | sed 's|Cargo.toml|src/lib.rs|')
+    "$(git grep -l "proc-macro.*true" :**/Cargo.toml | sed 's|Cargo.toml|src/lib.rs|')"
 fi
 
 #shellcheck source=ci/common/limit-threads.sh
