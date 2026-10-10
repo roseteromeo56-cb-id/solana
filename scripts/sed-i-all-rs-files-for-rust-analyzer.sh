@@ -9,7 +9,7 @@ if [[ $1 = "doit" ]]; then
   # it's true that we put true just for truly-aligned lines
   # shellcheck disable=SC2046 # our rust files are sanely named with no need to escape
   true &&
-    sed -i -e 's/#\[cfg(test)\]/#[cfg(escaped_cfg_test)]/g' $(git ls-files :**.rs :^**/build.rs) &&
+    sed -i -e 's/#\[cfg(test)\]/#[cfg(escaped_cfg_test)]/g' "$(git ls-files :**.rs :^**/build.rs)" &&
     sed -i -e 's/#\[bench\]/#[cfg(escaped_bench)]/g' $(git ls-files :**.rs :^**/build.rs) &&
     sed -i -e 's/#\[test\]/#[cfg(escaped_test)]/g' $(git ls-files :**.rs :^**/build.rs) &&
     git ls-files -z :**.rs :^**/build.rs | xargs -0 sed -i -e 's/#\[tokio::test\]/#[cfg(escaped_tokio_test)]/g'
