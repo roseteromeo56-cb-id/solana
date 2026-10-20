@@ -63,9 +63,10 @@ touch target/cov/before-test
 # Don't support odd file names in our repo ever
 if [[ -n $CI || -z $1 ]]; then
   # shellcheck disable=SC2046
-  touch \
-    $(git ls-files :**/build.rs) \
-    "$(git grep -l "proc-macro.*true" :**/Cargo.toml | sed 's|Cargo.toml|src/lib.rs|')"
+  touch $(git ls-files :**/build.rs)
+  while IFS= read -r proc_macro_file; do
+    touch "$proc_macro_file"
+  done < <(git grep -l "proc-macro.*true" :**/Cargo.toml | sed 's|Cargo.toml|src/lib.rs|')
 fi
 
 #shellcheck source=ci/common/limit-threads.sh
