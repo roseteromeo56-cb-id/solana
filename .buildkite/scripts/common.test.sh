@@ -10,6 +10,20 @@ source "$here"/func-assert-eq.sh
 source "$here"/common.sh
 
 (
+  want="  test"
+  got=$(printf 'test\n' | indent)
+
+  assert_eq "default indentation" "$want" "$got"
+)
+
+(
+  want="      test"
+  got=$(printf 'test\n' | indent 6)
+
+  assert_eq "custom indentation" "$want" "$got"
+)
+
+(
   want=$(
     cat <<EOF | indent
 - name: "test"
